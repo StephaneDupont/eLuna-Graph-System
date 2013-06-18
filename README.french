@@ -1,0 +1,283 @@
+---------------
+| DESCRIPTION |
+---------------
+
+Titre   : eLuna Graph System
+Version : 1.07
+Date    : 2010-06-23
+Website : http://www.eluna.org/eluna_graph_system.html
+Auteur  : Stéphane Dupont
+Mail    : steph@eluna.org
+License : GNU General Public License (see ./LICENSE)
+
+
+eLuna Graph System est une application écrite en Perl basée sur
+RRDTool. Son but est la collection, puis l'affichage sous forme de
+graphes, de données afin d'aider à la surveillance d'une machine.
+Par défaut, l'application permet de monitorer la charge, le
+pourcentage d'utilisation cpu, le pourcentage d'utilisation mémoire,
+le nombre de processus, la quantité de données transmises via eth0
+(In/Out) et le pourcentage d'utilisation d'espace disque sur /.
+
+
+-------------
+| PREREQUIS |
+-------------
+
+- Une machine à monitorer ;)
+- Un accès root sur cette machine
+- Un serveur http (Apache conseillé)
+- RRDTool (de préférence version >= 1.2)
+- Perl (de préférence version >= 5.8)
+  avec les modules suivants installés :
+  * DateTime
+  * HTML::Template::Expr
+
+
+----------------
+| INSTALLATION |
+----------------
+
+- Décompresser l'archive dans un dossier accessible via Apache.
+
+  Exemple :
+    mv eluna_graph_system.tar.gz /var/www/graphs/
+    cd /var/www/graphs/
+    tar -xzf eluna_graph_system.tar.gz
+
+- Effectuer un chown et/ou un chmod (si nécessaire) sur l'ensemble
+  des scripts afin qu'ils soient accessibles en lecture et en
+  exécution par le couple user/group du serveur http. Le dossier 
+  'graphs' doit également être accessible en écriture par ce même
+  couple. Dans la plupart des cas, vous n'avez rien à faire.
+
+- Planifier l'exécution du script 'update.pl' toute les 5 minutes à
+  l'aide de crontab.
+
+  Exemple :
+    */5 * * * * root /var/www/graphs/update.pl
+
+- Configurer Apache (ou tout autre serveur http...) afin que le script
+  'index.pl' soit bien interprété comme un script perl et qu'il soit
+  considéré comme 'DirectoryIndex'.
+
+  Exemple :
+    <Directory /var/www/graphs/>
+      AddHandler cgi-script .pl
+      Options +ExecCGI
+      DirectoryIndex index.pl
+    </Directory>
+    
+- S'assurer que le fichier '.htaccess' contenant 'deny from all' et contenu
+  dans le dossier 'rrd' soit bien pris en compte par Apache. Le dossier 'rrd'
+  ne doit pas être accessible via http. Dans le cas d'un serveur http autre
+  que Apache, reproduire un mécanisme de protection similaire. 
+
+Voilà, l'application devrait à présent être fonctionnelle. Attendez une dizaine
+de minutes histoire que la tâche cron soit exécutée au moins deux fois, puis
+essayez de visualiser tout ça dans un navigateur web. Si tout se passe bien,
+vous verrez de jolis débuts de graphes ;)
+
+N'hésitez pas à m'envoyer un mail (steph@eluna.org) pour me faire part de
+vos impressions.
+
+
+-----------------
+| CUSTOMISATION |
+-----------------
+
+1/ Paramètres de l'application
+   ---------------------------
+
+Un certain nombre de paramètres tels que le nom de votre serveur, le format
+des images générées, la taille des images générées, les couleurs des images
+générées, la vue par défaut, ... peuvent être modifiés via la section 
+'Configuration' située en début du fichier 'index.pl'.
+
+
+2/ Apparence/textes de l'application
+   ---------------------------------
+
+Pour la gestion de l'apparence graphique, de la mise en page et des 
+textes (hors images générées), l'application utilise le module Perl 
+HTML::Template::Expr, lui même étant une extension du module Perl
+HTML::Template, qui permet de définir un template HTML externe.
+
+Ce template se situe dans le dossier 'template' et est constitué du
+fichier 'index.html' (lui même incluant la feuille de style
+'template/css/main.css' et les images contenues dans le dossier
+'template/images/').
+
+Pour plus d'informations, vous pouvez consulter la documentation de ces
+deux modules ici : http://html-template.sourceforge.net/
+
+
+3/ Ajout/Customisation d'éléments 
+   ------------------------------
+
+Notes:
+
+- Il est fortement conseillé pour l'ajout d'un élément de se baser
+  sur un élément existant plutôt que de partir de zéro.
+
+- Il est fortement conseillé de lire la documentation sur RRDTool
+  avant de customiser ou d'ajouter des éléments. Cette documentation,
+  ainsi que des didacticiels, dont certains en français, sont 
+  disponibles sur le site de RRDTool :
+    http://people.ee.ethz.ch/~oetiker/webtools/rrdtool/
+
+
+/* Fonctionnement */
+   --------------
+
+   Chaque élément est constitué d'un dossier placé dans le répertoire 'rrd'.
+   Ce dossier doit contenir un fichier de création ('create.sh'), un fichier
+   de mise à jour ('update.sh' ou 'update.pl') et un fichier destiné à la
+   génération de graphe ('graph.pm').
+
+
+/* Nom du dossier */
+   --------------
+
+   Le nom du dossier doit être l'identifiant de l'élément, éventuellement
+   précédé d'un entier et du caractère '_'. Par exemple, pour un élément
+   que l'on veut identifier par 'cpu', le nom du dossier peut être 'cpu'
+   ou, par exemple, '123_cpu'.
+
+   Le fait de faire précéder l'identifiant de l'élément par un entier 
+   est destiné à spécifier l'ordre d'affichage. En effet, les graphes
+   des éléments sont affichés par ordre alphabétique des dossiers les
+   contenant, et non par ordre alphabétique de leurs identifiants. 
+
+
+/* Création: 'create.sh' */
+   ---------------------
+
+   Le fichier 'create.sh' est responsable de la création de la Round Robin
+   Database. Il n'est en fait rien d'autre qu'un fichier shell contenant une 
+   commande de création de RRD. La RRD créée doit se nommer 'id.rrd', où
+   'id' est l'identifiant de l'élément.
+
+   Pour différentes raisons, et notamment pour des raisons de cohérence, il est
+   souhaitable de spécifier les mêmes RRA (Round Robin Archives) et la même 
+   valeur de step pour chacun des éléments de l'application.
+
+   Exemple :
+     Création d'une Round Robin Database correspondant à l'élément 'cpu'
+     et destinée à stocker quatre DS (Data Sources) : 'user', 'system',
+     'nice' et 'idle' 
+
+     #!/bin/bash
+
+     rrdtool create cpu.rrd \
+       --start `date +%s` \
+       --step 300 \
+       DS:user:COUNTER:600:0:U \
+       DS:system:COUNTER:600:0:U \
+       DS:nice:COUNTER:600:0:U \
+       DS:idle:COUNTER:600:0:U \
+       RRA:AVERAGE:0.5:1:2016 \
+       RRA:AVERAGE:0.5:6:1344 \
+       RRA:AVERAGE:0.5:24:732 \
+       RRA:AVERAGE:0.5:144:1460
+
+
+/* Mise à jour: 'update.sh' / 'update.pl' */
+   --------------------------------------
+
+   Le fichier 'update.sh' est responsable de la mise à jour de la Round
+   Robin Database associée à l'élément. L'exécution de ce script doit
+   donc insérer dans la RRD une nouvelle valeur pour l'ensemble des
+   DS (Data Sources) définies dans le fichier de création.
+
+   A noter qu'il est possible de remplacer ce fichier shell 'update.sh'
+   par un fichier perl 'update.pl'. Si le premier n'est pas trouvé, le
+   second sera exécuté.
+
+   Exemple :
+     Mise à jour de la RRD associée à l'élément 'cpu' par un script perl
+
+     #!/usr/bin/perl
+
+     $dummy = `cat /proc/stat | grep "^cpu "`;
+     $dummy =~ /(.*) (.*) (.*) (.*) (.*)/;
+
+     system("rrdtool update cpu.rrd -t user:system:nice:idle N:$2:$3:$4:$5");
+
+
+/* Génération du graphe: 'graph.pm' */
+   --------------------------------
+
+   Le fichier 'graph.pm' contient des paramètres destinés à l'affichage
+   du graphe associé à l'élément. On doit y trouver :
+
+   * Le titre du graphe, contenu dans la variable $GRAPH_TITLES{'id'}
+     (où 'id' est l'identifiant de l'élément entouré de simple quotes).
+     Si {#server#} est présent dans ce titre il sera substitué par le
+     nom du serveur au moment de la génération de graphe.
+
+   * Un ensemble de paramètres qui seront passés à RRDTool lors de la 
+     génération de graphe. Cet ensemble de paramètres doit être contenu
+     dans la variable $GRAPH_CMDS{'id'} (où 'id' est l'identifiant de
+     l'élément entouré de simple quotes).
+     
+     Un certain nombre de substitutions seront réalisées dans cet ensemble
+     de paramètres au moment de la génération de graphe.
+     En voici la liste :
+
+     {#server#}    : Le nom du serveur
+     {#path#}      : Le chemin du dossier de l'élément
+     {#color1#}    : Couleur 1 de tracé des graphes
+     {#color2#}    : Couleur 2 de tracé des graphes
+     {#color3#}    : Couleur 3 de tracé des graphes
+     {#color4#}    : Couleur 4 de tracé des graphes
+     {#color5#}    : Couleur 5 de tracé des graphes
+     {#dcolor1#}   : Couleur 1 de dégradé des graphes
+     {#dcolor2#}   : Couleur 2 de dégradé des graphes
+     {#dcolor3#}   : Couleur 3 de dégradé des graphes
+     {#linecolor#} : Couleur de tracé des lignes
+
+     A noter que certains paramètres sont gérés par l'application et ne
+     nécessitent pas d'être spécifiés ici. Ces paramètres sont :
+
+     ~ le nom du fichier image généré
+     ~ le type du fichier image généré
+     ~ la date de départ du graphe (--start)
+     ~ la date de fin du graphe (--end)
+     ~ les dimensions du graphe (--w et --h)
+     ~ le commentaire du graphe (COMMENT:)
+
+   Exemple :
+     Fichier 'graph.pm' associé à l'élément 'cpu' des exemples précédents
+
+     $GRAPH_TITLES{'cpu'} = "{#server#} - CPU Usage";
+     $GRAPH_CMDS{'cpu'} = <<"CPU_GRAPH_CMD";
+     --title "{#server#} - CPU Usage"
+     --vertical-label="Percent"
+     --lower-limit 0 --upper-limit 100
+     DEF:user={#path#}cpu.rrd:user:AVERAGE
+     DEF:system={#path#}cpu.rrd:system:AVERAGE
+     DEF:nice={#path#}cpu.rrd:nice:AVERAGE
+     DEF:idle={#path#}cpu.rrd:idle:AVERAGE
+     CDEF:total=user,system,+,nice,+,idle,+
+     CDEF:p_user=user,total,/,100,*
+     CDEF:p_system=system,total,/,100,*
+     CDEF:p_nice=nice,total,/,100,*
+     CDEF:mysum=p_user,p_system,+,p_nice,+
+     AREA:p_user{#dcolor1#}:"User   "
+     GPRINT:p_user:LAST:"Current\\: %5.2lf%%  "
+     GPRINT:p_user:AVERAGE:"Average\\: %5.2lf%%  "
+     GPRINT:p_user:MAX:"Max\\: %5.2lf%%\\n"
+     STACK:p_system{#dcolor2#}:"System "
+     GPRINT:p_system:LAST:"Current\\: %5.2lf%%  "
+     GPRINT:p_system:AVERAGE:"Average\\: %5.2lf%%  "
+     GPRINT:p_system:MAX:"Max\\: %5.2lf%%\\n"
+     STACK:p_nice{#dcolor3#}:"Nice   "
+     GPRINT:p_nice:LAST:"Current\\: %5.2lf%%  "
+     GPRINT:p_nice:AVERAGE:"Average\\: %5.2lf%%  "
+     GPRINT:p_nice:MAX:"Max\\: %5.2lf%%\\n"
+     LINE1:mysum{#linecolor#}
+     CPU_GRAPH_CMD
+
+     1; # Return true
+

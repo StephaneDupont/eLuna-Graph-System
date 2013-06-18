@@ -1,0 +1,159 @@
+html,body {
+  background: #FFFFFF;
+  margin: 0px;
+  padding: 0px;
+}
+
+#main p, #main ul, #main td, #main div {
+  margin-bottom: 20px;
+}
+
+p, ul, td {
+  text-align:justify;
+}
+
+html, body, p, ul, td, div {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #666666;
+  line-height: 20px;
+}
+
+form, img {
+  padding: 0px;
+  margin: 0px;
+}
+
+b, strong {
+  color: #000000;
+  font-weight: normal;
+}
+
+input {
+  font-family : Arial, Helvetica, sans-serif;
+  font-size:  12px;
+  font-weight: bold;
+  color: #000000;
+  background: #FFFFFF;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: solid;
+  text-align: center;
+}
+
+h1, h2, h3, h4 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: #444444;
+  line-height: 22px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  background-color: #F0F0F0;
+}
+
+.underlined {
+  color: #000000;
+  font-weight: normal;
+  border-bottom: 1px dashed #000000;
+}
+
+.infos {
+  font-size: 12px;
+  width: 600px;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+#container {
+  width: 881px;
+  padding-top: 25px;
+}
+
+#top {
+  width: 881px;
+  height: 132px;
+}
+
+#top_left {
+  width: 150px;
+  height: 132px;
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px;
+}
+
+#top_right {
+  width: 731px;
+  height: 132px;
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px;
+  padding-left: 25px;
+  padding-top: 110px;
+  background-repeat: no-repeat;
+}
+
+#title {  
+  border-bottom: 1px dashed #000000;
+  font-family: Georgia, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  color: #444444;
+}
+
+#view-selector {
+  text-align: right;
+  margin: 0px;
+  padding: 0px;
+  padding-right: 30px;  
+  height: 30px;
+}
+
+#main {
+  width: 850px;
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px;
+  padding-right: 30px;
+}
+
+#content {
+  width: 850px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#back {
+  text-align: right;
+}
+
+#back a, #back a:link, #back a:visited, #back a:hover {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #444444;
+  text-decoration: none;
+  border-bottom: 1px dashed #757575;  
+}
+
+#footer {
+  color: #757575;
+  font-weight: normal;
+  font-size: 11px;
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#footer a, #footer a:link, #footer a:visited, #footer a:hover {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  color: #757575;
+  text-decoration: none;
+  border-bottom: 1px dashed #757575;
+}
+

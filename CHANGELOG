@@ -1,0 +1,83 @@
+- Minor fix in update.pl, thanks to Benoit
+
+
+---------
+| v1.07 |
+---------
+
+- Datasource type is now DERIVE for cpu et eth0
+- Label of eth0 graphs updated
+- Order of cpu graph parameters changed
+- Updated the RRDTool link to the correct URL (http://oss.oetiker.ch/rrdtool/)
+
+To update from a previous version, run these commands in eLuna Graph System root folder :
+
+rrdtool tune rrd/05_eth0_out/eth0_out.rrd -d out:DERIVE:600:0:U
+rrdtool tune rrd/06_eth0_in/eth0_in.rrd -d in:DERIVE:600:0:U
+rrdtool tune rrd/02_cpu/cpu.rrd -d user:DERIVE:600:0:U
+rrdtool tune rrd/02_cpu/cpu.rrd -d nice:DERIVE:600:0:U
+rrdtool tune rrd/02_cpu/cpu.rrd -d system:DERIVE:600:0:U
+rrdtool tune rrd/02_cpu/cpu.rrd -d idle:DERIVE:600:0:U
+
+Thanks to Ernst Lobsiger for these corrections/improvements.
+
+
+---------
+| v1.06 |
+---------
+
+- Bug corrected in rrd/02_cpu/update.pl, thanks to Ernst Lobsiger
+  ("system" and "nice" values were exchanged)
+
+
+---------
+| v1.05 |
+---------
+
+- New view added : "Last Two Days"
+- View labels updated
+- robots.txt file added
+- "Custom View" graphs are now displayed as "Zoomed" graphs
+- The "Custom View" form will now also appears in "Zoom" mode
+- The page will no longer refresh itself if in "Custom View" mode
+- New configuration variable $DELAY_BETWEEN_CUSTOM
+
+
+---------
+| v1.04 |
+---------
+
+- Timezone problem corrected
+
+
+---------
+| v1.03 |
+---------
+
+- Bug fixes in rrd/03_mem and in rrd/04_process
+
+
+---------
+| v1.02 |
+---------
+
+- English documentation added
+- 'ifconfig' replaced by '/sbin/ifconfig' (thanks to Ben West)
+- Add a test to prevent divide by 0 error when used in a no swap
+  memory system (thanks to Ben West)
+- Timezone on Debian is no longer a problem (thanks to Marco Barcella)
+
+
+---------
+| v1.01 |
+---------
+
+- RRDTool compatibility bug correction
+  (use of -w/-h in place of --w/--h)
+
+
+---------
+| v1.00 |
+---------
+
+First release ;)
