@@ -6,8 +6,8 @@
  # ------------------------------------------------------ #
  # File    : update.pl                                    #
  # Author  : Stephane Dupont                              #
- # Version : 1.07                                         #
- # Date    : 2010-06-23                                   #
+ # Version : 1.08                                         #
+ # Date    : 2013-06-25                                   #
  # Summary :                                              #
  #   Script that updates the differents RRD elements      #
  #   To use with cron, by example :                       #

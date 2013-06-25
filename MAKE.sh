@@ -63,10 +63,12 @@ chown -Rf root:root *
 chmod -Rf 755 *
 chmod -Rf 777 graphs
 chmod -Rf 777 temp/graphs
+chmod 644 graphs/.htaccess
+chmod 644 temp/graphs/.htaccess
 
 cd temp
 
-rm -Rf graphs/*
+rm -Rf graphs/*.png
 rm -Rf template/src
 rm -Rf rrd/08_*
 rm -Rf rrd/09_*

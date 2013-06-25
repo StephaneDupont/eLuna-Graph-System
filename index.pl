@@ -6,8 +6,8 @@
  # ------------------------------------------------------ #
  # File    : index.pl                                     #
  # Author  : Stephane Dupont                              #
- # Version : 1.07                                         #
- # Date    : 2010-06-23                                   #
+ # Version : 1.08                                         #
+ # Date    : 2013-06-25                                   #
  # Summary :                                              #
  #   Script that display graphs                           #
  #   To be used in a web navigator                        #
