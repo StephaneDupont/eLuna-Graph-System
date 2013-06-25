@@ -76,8 +76,7 @@ The application should now work fine. Wait about ten minutes so that the cron
 task can be executed at least twice, then try to view all this in a web browser.
 If everything goes well, you will see pretty little beginnings of graphs ;)
 
-Do not hesitate to send me an email (steph@eluna.org) to let me know your
-impressions.
+Do not hesitate to send me an email (steph@eluna.org) if you have any question.
 
 
 -----------------
@@ -89,8 +88,8 @@ impressions.
 
 A certain number of parameters such as the name of your server, the format
 of pictures generated, the size of images generated, the colours of images
-generated, the default view, etc., can be modified in the 'Configuration'
-section located at the beginning of the 'index.pl' file.
+generated, the default view, etc., can be modified via the config file
+'config.pm'
 
 
 2/ Application appearance/texts

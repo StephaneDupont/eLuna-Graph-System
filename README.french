@@ -78,8 +78,8 @@ de minutes histoire que la tâche cron soit exécutée au moins deux fois, puis
 essayez de visualiser tout ça dans un navigateur web. Si tout se passe bien,
 vous verrez de jolis débuts de graphes ;)
 
-N'hésitez pas à m'envoyer un mail (steph@eluna.org) pour me faire part de
-vos impressions.
+N'hésitez pas à m'envoyer un mail (steph@eluna.org) pour toute suggestion ou
+commentaire.
 
 
 -----------------
@@ -91,8 +91,8 @@ vos impressions.
 
 Un certain nombre de paramètres tels que le nom de votre serveur, le format
 des images générées, la taille des images générées, les couleurs des images
-générées, la vue par défaut, ... peuvent être modifiés via la section 
-'Configuration' située en début du fichier 'index.pl'.
+générées, la vue par défaut, ... peuvent être modifiés via l'édition du
+fichier 'config.pm'
 
 
 2/ Apparence/textes de l'application

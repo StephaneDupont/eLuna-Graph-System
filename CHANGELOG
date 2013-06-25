@@ -1,4 +1,14 @@
-- Minor fix in update.pl, thanks to Benoit
+| ----- |
+| v1.08 |
+| ----- |
+
+- You can now choose not to display some of the DS in the graphs
+- Option to add UID to img urls (to be sure IE refresh images and don't use the cache)
+- Configuration is now in a separated file
+- UPGRADE file added
+- Use of JQuery
+- A few minor fixes
+- Code cleaning
 
 
 ---------
@@ -10,7 +20,7 @@
 - Order of cpu graph parameters changed
 - Updated the RRDTool link to the correct URL (http://oss.oetiker.ch/rrdtool/)
 
-To update from a previous version, run these commands in eLuna Graph System root folder :
+To update from a previous version, run these commands in eLuna Graph System root folder:
 
 rrdtool tune rrd/05_eth0_out/eth0_out.rrd -d out:DERIVE:600:0:U
 rrdtool tune rrd/06_eth0_in/eth0_in.rrd -d in:DERIVE:600:0:U

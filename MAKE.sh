@@ -19,6 +19,9 @@ mv -f TEMP index.pl
 sed "s/^ # Version : ..../ # Version : $version/" update.pl > TEMP
 mv -f TEMP update.pl
 
+sed "s/^ # Version : ..../ # Version : $version/" config.pm > TEMP
+mv -f TEMP config.pm
+
 sed "s/^Version : ..../Version : $version/" README.french > TEMP
 mv -f TEMP README.french
 
@@ -31,6 +34,9 @@ mv -f TEMP index.pl
 sed "s/^ # Date    : ........../ # Date    : $date/" update.pl > TEMP
 mv -f TEMP update.pl
 
+sed "s/^ # Date    : ........../ # Date    : $date/" config.pm > TEMP
+mv -f TEMP config.pm
+
 sed "s/^Date    : ........../Date    : $date/" README.french > TEMP
 mv -f TEMP README.french
 
@@ -41,9 +47,11 @@ mkdir temp
 
 cp index.pl temp
 cp update.pl temp
+cp config.pm temp
 cp LICENSE temp
 cp README.* temp
 cp CHANGELOG temp
+cp UPGRADE temp
 cp -R template temp
 cp -R rrd temp
 cp -R graphs temp
@@ -72,6 +80,7 @@ mv ../eluna_graph_system.tar.gz ../out/$version
 mv README.* ../out/$version
 mv LICENSE ../out/$version
 mv CHANGELOG ../out/$version
+mv UPGRADE ../out/$version
 cd ..
 rm -R temp
 cd out

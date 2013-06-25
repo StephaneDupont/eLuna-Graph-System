@@ -18,6 +18,8 @@
     var pageTracker = _gat._getTracker("UA-5257047-1");
     pageTracker._trackPageview();
   </script>
+  
+  <script src="<!-- TMPL_VAR template_path -->js/jquery-1.10.1.min.js"></script>
 
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta http-equiv="Cache-Control" content="no-cache">
@@ -49,15 +51,8 @@
     <tr>
       <td id="view-selector">
         <!-- TMPL_IF summary -->
-        <script language="javascript">
-          function changeView() {
-            box = document.forms["view-form"].elements["view"];
-            view = box.options[box.selectedIndex].value;
-            location.href='index.pl?summary_view='+view;   
-          }
-        </script>
-        <form name="view-form">
-          <select name="view" onChange="changeView()">
+        <form>
+          <select name="change-view" id="change-view">
             <option value="h"<!-- TMPL_IF EXPR="summary eq 'h'" --> selected<!--/TMPL_IF -->>Last Four Hours
             <option value="d"<!-- TMPL_IF EXPR="summary eq 'd'" --> selected<!--/TMPL_IF -->>Last Day
             <option value="b"<!-- TMPL_IF EXPR="summary eq 'b'" --> selected<!--/TMPL_IF -->>Last Two Days
@@ -66,21 +61,24 @@
             <option value="y"<!-- TMPL_IF EXPR="summary eq 'y'" --> selected<!--/TMPL_IF -->>Last Year
           </select>
         </form>
-        <!-- TMPL_ELSE -->
         <script language="javascript">
-          function changeRRD() {
-            box = document.forms["rrd-form"].elements["rrd"];
-            rrd = box.options[box.selectedIndex].value;
-            location.href='index.pl?rrd='+rrd+'<!-- TMPL_VAR curl -->';
-          }
+          $('#change-view').change(function() {
+            location.href='index.pl?summary_view='+this.value;
+          });
         </script>
-        <form name="rrd-form">
-          <select name="rrd" onChange="changeRRD()">
+        <!-- TMPL_ELSE -->
+        <form>
+          <select id="rrd-select" name="rrd-select">
             <!-- TMPL_LOOP rrds -->
             <option value="<!-- TMPL_VAR id -->"<!-- TMPL_IF current --> selected<!--/TMPL_IF -->><!-- TMPL_VAR name -->
             <!--/TMPL_LOOP -->
           </select>
         </form>
+        <script language="javascript">
+          $('#rrd-select').change(function() {
+            location.href='index.pl?rrd='+this.value+'<!-- TMPL_VAR curl -->'; 
+          });
+        </script>
         <!--/TMPL_IF -->
       </td>
     </tr>
@@ -106,7 +104,54 @@
           </h1>
 
           <div align="center">
-            <!-- TMPL_IF link_type --><a title="<!-- TMPL_IF EXPR="link_type eq 'zoom'" -->Zoom Graph<!--/TMPL_IF --><!-- TMPL_IF EXPR="link_type eq 'more'" -->View More Graphs<!--/TMPL_IF -->" href="<!-- TMPL_VAR link_url -->" target="_self"><!--/TMPL_IF --><img border="0" src="<!-- TMPL_VAR img_src -->"><!-- TMPL_IF link_type --></a><!--/TMPL_IF -->
+
+            <div class="graph">
+
+              <!-- TMPL_IF link_type --><a title="<!-- TMPL_IF EXPR="link_type eq 'zoom'" -->Zoom Graph<!--/TMPL_IF --><!-- TMPL_IF EXPR="link_type eq 'more'" -->View More Graphs<!--/TMPL_IF -->" href="<!-- TMPL_VAR link_url -->" target="_self" class="graph"><!--/TMPL_IF --><img border="0" src="<!-- TMPL_VAR img_src -->"><!-- TMPL_IF link_type --></a><!--/TMPL_IF -->
+
+              <!-- TMPL_IF dss -->
+              <div id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div" class="options" style="display: none;">
+                <!-- TMPL_LOOP dss -->
+                <input type="checkbox" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_<!-- TMPL_VAR __counter__ -->"<!-- TMPL_IF state --> checked<!--/TMPL_IF --> /><!-- TMPL_VAR name -->&nbsp;
+                <!--/TMPL_LOOP-->
+                <a href="#" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink">Update</a>
+              </div>
+
+              <script>
+                $(function() {
+                  $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link").click(function(e) {
+                    e.preventDefault();
+                    $('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div').toggle();
+                  });
+                });
+                $(function() {
+                  $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink").click(function(e) {
+                    e.preventDefault(); 
+                    var cds = '';
+                    var i=1;
+                    while ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i).length > 0) {
+                      cds += ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i++).is(':checked')?'1':'0');
+                    }
+                    if (cds == 0) {
+                      alert('You must display at least one element!');
+                    } else {
+                      var url = $(location).attr('href');
+                      url = url.replace(new RegExp("[&\?]?crrd=[^&]*"), "");
+                      url = url.replace(new RegExp("[&\?]?cds=[^&]*"), "");
+                      url = url+(url.indexOf('?')!==-1?'&':'?')+'crrd=<!-- TMPL_VAR rrd_sid -->&cds='+cds;
+                      window.location = url;
+                    }
+                  });
+                });
+              </script>
+
+              <div class="options-link">
+                <a href="#" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link">Options</a>
+              </div>
+              <!--/TMPL_IF dss -->
+
+            </div>
+
           </div>
 
           <!-- TMPL_IF display_command -->
