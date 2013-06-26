@@ -5,7 +5,7 @@
  # File    : config.pm                                    #
  # Author  : Stephane Dupont                              #
  # Version : 1.08                                         #
- # Date    : 2013-06-25                                   #
+ # Date    : 2006-06-26                                   #
  # Summary :                                              #
  #   Config file                                          #
  # ------------------------------------------------------ #

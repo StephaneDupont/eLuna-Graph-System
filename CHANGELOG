@@ -3,7 +3,7 @@
 | ----- |
 
 - You can now choose not to display some of the DS in the graphs
-- Option to add UID to img urls (to be sure IE refresh images and don't use the cache)
+- Option to add UID to img urls (to be sure IE refreshes images and doesn't use the cache)
 - Configuration is now in a separated file
 - UPGRADE file added
 - Use of JQuery
