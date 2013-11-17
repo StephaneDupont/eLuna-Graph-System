@@ -107,7 +107,7 @@
 
             <div class="graph">
 
-              <!-- TMPL_IF link_type --><a title="<!-- TMPL_IF EXPR="link_type eq 'zoom'" -->Zoom Graph<!--/TMPL_IF --><!-- TMPL_IF EXPR="link_type eq 'more'" -->View More Graphs<!--/TMPL_IF -->" href="<!-- TMPL_VAR link_url -->" target="_self" class="graph"><!--/TMPL_IF --><img border="0" src="<!-- TMPL_VAR img_src -->"><!-- TMPL_IF link_type --></a><!--/TMPL_IF -->
+              <!-- TMPL_IF link_type --><a title="<!-- TMPL_IF EXPR="link_type eq 'zoom'" -->Zoom Graph<!--/TMPL_IF --><!-- TMPL_IF EXPR="link_type eq 'more'" -->View More Graphs<!--/TMPL_IF -->" href="<!-- TMPL_VAR link_url -->" target="_self" class="graph"><!-- TMPL_ELSE --><a href="download.pl?uid=<!-- TMPL_VAR uid -->"><!--/TMPL_IF --><img border="0" src="<!-- TMPL_VAR img_src -->"></a>
 
               <!-- TMPL_IF dss -->
               <div id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div" class="options" style="display: none;">
@@ -144,11 +144,15 @@
                   });
                 });
               </script>
-
-              <div class="options-link">
-                <a href="#" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link">Options</a>
-              </div>
               <!--/TMPL_IF dss -->
+
+              <div class="graph-links">
+                <!-- TMPL_IF dss -->
+                <a href="#" title="Display graph options" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link">Options</a><br />
+                <!--/TMPL_IF dss -->
+                <a href="download.pl?uid=<!-- TMPL_VAR uid -->" title="Download this graph as a PNG file">Download</a><br />
+                <a href="download.pl?rrd=<!-- TMPL_VAR rrd_sid -->&time1=<!-- TMPL_VAR time1 -->&time2=<!-- TMPL_VAR time2 -->" title="Download the raw RRDtool data used to generate this graph in a CSV file">Raw Data</a>
+              </div>
 
             </div>
 

@@ -4,8 +4,8 @@
  # ------------------------------------------------------ #
  # File    : config.pm                                    #
  # Author  : Stephane Dupont                              #
- # Version : 1.08                                         #
- # Date    : 2006-06-26                                   #
+ # Version : 1.09                                         #
+ # Date    : 2013-11-17                                   #
  # Summary :                                              #
  #   Config file                                          #
  # ------------------------------------------------------ #
@@ -70,17 +70,11 @@ $GRAPH_DCOLOR3 = '#FF0000';
 # Default view (h(ourly)|d(aily)|b(i-daily)|w(eekly)|m(onthly)|y(early))
 $DEFAULT_VIEW = 'd';
 
-# Minimum time (in seconds) between two generations of a same graph
-$DELAY_BETWEEN = '10';
+# Generated images older than this value (seconds) will be deleted
+$MAX_IMG_AGE = 3600; 
 
-# Minimum time (in seconds) between two generations of a custom graph
-$DELAY_BETWEEN_CUSTOM = '2';
-
-# Add UID to image urls to make sure images are not cached (bad IE behavior,
-# other browsers are fine without this option).
-# For this option to work, you must use an apache server with mod_rewrite
-# or use a similar mecanism (see graphs/.htaccess file)
-# 0 to disable.
-$ADD_UID_TO_IMG_URL = 1;
+# When outputting data in a CSV file, shall we convert from scientific
+# notation to decimal notation?
+$CSV_DATA_CONVERT_TO_DECIMAL = 1;
 
 1; # Return true

@@ -6,8 +6,8 @@
  # ------------------------------------------------------ #
  # File    : index.pl                                     #
  # Author  : Stephane Dupont                              #
- # Version : 1.08                                         #
- # Date    : 2006-06-26                                   #
+ # Version : 1.09                                         #
+ # Date    : 2013-11-17                                   #
  # Summary :                                              #
  #   Script that display graphs                           #
  #   To be used in a web navigator                        #
@@ -29,6 +29,7 @@ use POSIX qw(strftime);
 use CGI;
 use CGI::Cookie;
 use DateTime;
+use Time::HiRes qw(gettimeofday);
 use HTML::Template::Expr;
 
 
@@ -60,6 +61,17 @@ my ($title, $back_link, $summary, $display_custom_view, $cookie,
 sub elTrace
 {
   push @trace, "<!-- Trace: $_[0] -->\n";
+}
+
+
+# ------------ #
+# Return a UID #
+# ------------ #
+
+sub getUID
+{
+  ($s, $usec) = gettimeofday();
+  $s . $usec . $$ . int rand(1000) . int rand(1000);
 }
 
 
@@ -327,9 +339,9 @@ sub createRRDGraph
     $elh{'time2'} = &getEpoch($_[3]);
   }
 
-  $elh{'img_src'}  = $GRA_DIR.$elh{'rrd_id'}.'_'.$_[1];
-  $elh{'img_src'} .= '_zoom' if $cgi->param('type');
-  $elh{'img_src'} .= '.'.lc($IMG_FORMAT);
+  $elh{'uid'} = getUID();
+
+  $elh{'img_src'} = $GRA_DIR.$elh{'uid'}.'.'.lc($IMG_FORMAT);
   
   $elh{'strtime1'} = strftime "%Y-%m-%d %H\\:%M\\:%S", localtime($elh{'time1'});
   $elh{'strtime2'} = strftime "%Y-%m-%d %H\\:%M\\:%S", localtime($elh{'time2'});
@@ -363,27 +375,11 @@ sub createRRDGraph
   $elh{'cmd'} =~ s/\{#dcolor2#\}/$GRAPH_DCOLOR2/g;
   $elh{'cmd'} =~ s/\{#dcolor3#\}/$GRAPH_DCOLOR3/g;
 
-  if ((-e $elh{'img_src'} && (stat($elh{'img_src'}))[10] >=
-      time - ($cgi->param('type') eq 'c'?$DELAY_BETWEEN_CUSTOM:$DELAY_BETWEEN)) &&
-      (!($cookie && $cookie->name eq $elh{'rrd_sid'}))) {
-    elTrace("Graph ".$elh{'rrd_id'}." has not been generated because you ".
-            "must wait for ".
-            ($cgi->param('type') eq 'c'?$DELAY_BETWEEN_CUSTOM:$DELAY_BETWEEN).
-            " seconds between two generations");
-  } else {
-    open my $oldout, ">&STDOUT";
-    open STDOUT, ">/dev/null";
-    system('rm -f '.$elh{'img_src'});
-    system($elh{'cmd'});
-    close STDOUT;
-    open STDOUT, ">&", $oldout;
-  }
-
-  if ($ADD_UID_TO_IMG_URL) {
-    my $t = '.'.lc($IMG_FORMAT);  
-    $elh{'img_src'} =~ s/$t$//;
-    $elh{'img_src'} .= '-'.(time() + int rand(1000)).$t;
-  }
+  open my $oldout, ">&STDOUT";
+  open STDOUT, ">/dev/null";
+  system($elh{'cmd'});
+  close STDOUT;
+  open STDOUT, ">&", $oldout;
 
   if (!$cgi->param('rrd')) {
     $elh{'link_type'} = "more";
@@ -488,6 +484,22 @@ if ($cookie) {
 }
 
 
+# ------------------------ #
+# Clean of old image files #
+# ------------------------ #
+
+my $now = time();
+opendir my $dir, $GRA_DIR;
+my @files = grep (/\.png/, readdir $dir);
+closedir $dir;
+foreach my $file (@files) {
+  my @stats = stat($GRA_DIR.$file);
+  if ($now - $stats[9] > $MAX_IMG_AGE) {
+    unlink $GRA_DIR.$file;
+  }
+}
+
+
 # ----------------------------------------- #
 # rrd is passed in parameter to the page... #
 # ----------------------------------------- #
@@ -543,8 +555,8 @@ if (defined $cgi->param('rrd') && $cgi->param('rrd') =~ /[a-zA-Z0-9]/) {
     $back_link = 'index.pl';
     $display_custom_view = 1;
 
-    $ctime1 = DateTime->from_epoch( epoch => time() - 172800, time_zone => "local");
-    $ctime2 = DateTime->from_epoch( epoch => time() - 86400, time_zone => "local");
+    $ctime1 = DateTime->from_epoch(epoch => time() - 172800, time_zone => "local");
+    $ctime2 = DateTime->from_epoch(epoch => time() - 86400, time_zone => "local");
     $ctime1 = $ctime1->strftime('%F %H:%M');
     $ctime2 = $ctime2->strftime('%F %H:%M'); 
   }
@@ -587,6 +599,8 @@ $template->param(ctime1 => $ctime1);
 $template->param(ctime2 => $ctime2);
 $template->param(elgraphs => \@elgraphs);
 $template->param(rrd => $cgi->param('rrd'));
+$template->param(zoom_mode => defined $cgi->param('rrd') &&
+  $cgi->param('rrd') =~ /[a-zA-Z0-9]/ && $cgi->param('type'));
 unless ($summary) {
   $template->param(
     rrds => &getRRDItems($cgi->param('rrd')));

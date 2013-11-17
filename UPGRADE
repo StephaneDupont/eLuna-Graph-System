@@ -1,10 +1,11 @@
-----------------------
-To upgrade from v1.07:
-----------------------
+----------------------------
+To upgrade from v1.07/v1.08:
+----------------------------
 
 - extract the files to a new folder
-- remove the 'rrd' folder and replace it with the one from your previous 1.07 installation
-- edit the config.pm file to match your previous 1.07 installation config section
+- remove the 'rrd' folder and replace it with the one from your previous 1.07/1.08 installation
+- edit the config.pm file to match your previous 1.07/1.08 installation config section (some
+  parameters were removed, others added)
 - replace your previous installation with the new folder
 
 Warning: some changes has been made to the template, so if you made changes to the template,

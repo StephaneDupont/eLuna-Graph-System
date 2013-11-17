@@ -19,6 +19,9 @@ mv -f TEMP index.pl
 sed "s/^ # Version : ..../ # Version : $version/" update.pl > TEMP
 mv -f TEMP update.pl
 
+sed "s/^ # Version : ..../ # Version : $version/" download.pl > TEMP
+mv -f TEMP download.pl
+
 sed "s/^ # Version : ..../ # Version : $version/" config.pm > TEMP
 mv -f TEMP config.pm
 
@@ -34,6 +37,9 @@ mv -f TEMP index.pl
 sed "s/^ # Date    : ........../ # Date    : $date/" update.pl > TEMP
 mv -f TEMP update.pl
 
+sed "s/^ # Date    : ........../ # Date    : $date/" download.pl > TEMP
+mv -f TEMP download.pl
+
 sed "s/^ # Date    : ........../ # Date    : $date/" config.pm > TEMP
 mv -f TEMP config.pm
 
@@ -47,7 +53,9 @@ mkdir temp
 
 cp index.pl temp
 cp update.pl temp
+cp download.pl temp
 cp config.pm temp
+cp -d favicon.ico temp
 cp LICENSE temp
 cp README.* temp
 cp CHANGELOG temp
@@ -56,8 +64,8 @@ cp -R template temp
 cp -R rrd temp
 cp -R graphs temp
 
-sed "s/eLuna Web Server/Localhost/g" temp/index.pl > TEMP
-mv -f TEMP temp/index.pl
+sed "s/eLuna Web Server/Localhost/g" temp/config.pm > TEMP
+mv -f TEMP temp/config.pm
 
 chown -Rf root:root *
 chmod -Rf 755 *

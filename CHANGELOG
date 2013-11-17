@@ -1,4 +1,13 @@
 | ----- |
+| v1.09 |
+| ----- |
+
+- You can now download the raw RRDtool data used to generate the graphs in a CSV file
+- Links added to download the graphs as PNG files
+- Images filenames are now UIDs
+
+
+| ----- |
 | v1.08 |
 | ----- |
 
