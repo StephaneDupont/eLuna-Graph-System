@@ -1,6 +1,6 @@
-----------------------------
-To upgrade from v1.07/v1.08:
-----------------------------
+---------------------------------------
+To upgrade from v1.07 or v1.08 to v1.09
+---------------------------------------
 
 - extract the files to a new folder
 - remove the 'rrd' folder and replace it with the one from your previous 1.07/1.08 installation

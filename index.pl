@@ -4,11 +4,11 @@
  # ------------------------------------------------------ #
  # eLuna Graph System                                     #
  # ------------------------------------------------------ #
- # File    : index.pl                                     #
- # Author  : Stephane Dupont                              #
- # Version : 1.09                                         #
- # Date    : 2013-11-17                                   #
- # Summary :                                              #
+ # File     : index.pl                                    #
+ # Author   : Stephane Dupont                             #
+ # Version  : 1.09                                        #
+ # Released : 2013-11-17                                  #
+ # Summary  :                                             #
  #   Script that display graphs                           #
  #   To be used in a web navigator                        #
  # ------------------------------------------------------ #

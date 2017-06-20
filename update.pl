@@ -4,11 +4,11 @@
  # ------------------------------------------------------ #
  # eLuna Graph System                                     #
  # ------------------------------------------------------ #
- # File    : update.pl                                    #
- # Author  : Stephane Dupont                              #
- # Version : 1.09                                         #
- # Date    : 2013-11-17                                   #
- # Summary :                                              #
+ # File     : update.pl                                   #
+ # Author   : Stephane Dupont                             #
+ # Version  : 1.09                                        #
+ # Released : 2013-11-17                                  #
+ # Summary  :                                             #
  #   Script that updates the differents RRD elements      #
  #   To use with cron, by example :                       #
  #   */5 * * * * root /path/to/update.pl                  #

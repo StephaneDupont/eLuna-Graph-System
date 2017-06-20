@@ -1,99 +1,103 @@
 #!/bin/bash
 
-echo 
-echo "!!!!!!!!!!!!!!!!!!!!"
-echo "First, you need to remove the google analytics script frome template/index.html !!!";
-echo "If it's not the case, CTRL+C !"
-echo "!!!!!!!!!!!!!!!!!!!!"
-echo 
-
 echo -n "Version (exemple: 1.00) : "; \
 read version; \
 
-echo -n "Date (exemple: 2006-01-24) : "; \
+echo -n "Release date (exemple: 2006-01-24) : "; \
 read date; \
 
-sed "s/^ # Version : ..../ # Version : $version/" index.pl > TEMP
+sed "s/^ # Version  : ..../ # Version  : $version/" index.pl > TEMP
 mv -f TEMP index.pl
 
-sed "s/^ # Version : ..../ # Version : $version/" update.pl > TEMP
+sed "s/^ # Version  : ..../ # Version  : $version/" update.pl > TEMP
 mv -f TEMP update.pl
 
-sed "s/^ # Version : ..../ # Version : $version/" download.pl > TEMP
+sed "s/^ # Version  : ..../ # Version  : $version/" download.pl > TEMP
 mv -f TEMP download.pl
 
-sed "s/^ # Version : ..../ # Version : $version/" config.pm > TEMP
-mv -f TEMP config.pm
+if [ -f config.pm ]; then
+  sed "s/^ # Version  : ..../ # Version  : $version/" config.pm > TEMP
+  mv -f TEMP config.pm
+fi
 
-sed "s/^Version : ..../Version : $version/" README.french > TEMP
-mv -f TEMP README.french
+sed "s/^ # Version  : ..../ # Version  : $version/" config.example.pm > TEMP
+mv -f TEMP config.example.pm
 
-sed "s/^Version : ..../Version : $version/" README.english > TEMP
-mv -f TEMP README.english
+sed "s/^Version  : ..../Version  : $version/" README > TEMP
+mv -f TEMP README
 
-sed "s/^ # Date    : ........../ # Date    : $date/" index.pl > TEMP
+sed "s/Version : ..../Version : $version/" README.md > TEMP
+mv -f TEMP README.md
+
+sed "s/^ # Released : ........../ # Released : $date/" index.pl > TEMP
 mv -f TEMP index.pl
 
-sed "s/^ # Date    : ........../ # Date    : $date/" update.pl > TEMP
+sed "s/^ # Released : ........../ # Released : $date/" update.pl > TEMP
 mv -f TEMP update.pl
 
-sed "s/^ # Date    : ........../ # Date    : $date/" download.pl > TEMP
+sed "s/^ # Released : ........../ # Released : $date/" download.pl > TEMP
 mv -f TEMP download.pl
 
-sed "s/^ # Date    : ........../ # Date    : $date/" config.pm > TEMP
-mv -f TEMP config.pm
+if [ -f config.pm ]; then
+  sed "s/^ # Released : ........../ # Released : $date/" config.pm > TEMP
+  mv -f TEMP config.pm
+fi
 
-sed "s/^Date    : ........../Date    : $date/" README.french > TEMP
-mv -f TEMP README.french
+sed "s/^ # Released : ........../ # Released : $date/" config.example.pm > TEMP
+mv -f TEMP config.example.pm
 
-sed "s/^Date    : ........../Date    : $date/" README.english > TEMP
-mv -f TEMP README.english
+sed "s/^Released : ........../Released : $date/" README > TEMP
+mv -f TEMP README
+
+sed "s/Released : ........../Released : $date/" README.md > TEMP
+mv -f TEMP README.md
 
 mkdir temp
 
 cp index.pl temp
 cp update.pl temp
 cp download.pl temp
-cp config.pm temp
+cp config.example.pm temp/config.pm
 cp -d favicon.ico temp
 cp LICENSE temp
-cp README.* temp
+cp README* temp
 cp CHANGELOG temp
 cp UPGRADE temp
 cp -R template temp
-cp -R rrd temp
+
+mkdir temp/rrd
+cp -R rrd/01_* temp/rrd/
+cp -R rrd/02_* temp/rrd/
+cp -R rrd/03_* temp/rrd/
+cp -R rrd/04_* temp/rrd/
+cp -R rrd/05_* temp/rrd/
+cp -R rrd/06_* temp/rrd/
+cp -R rrd/07_* temp/rrd/
 cp -R graphs temp
 
-sed "s/eLuna Web Server/Localhost/g" temp/config.pm > TEMP
-mv -f TEMP temp/config.pm
-
-chown -Rf root:root *
-chmod -Rf 755 *
-chmod -Rf 777 graphs
+chown -Rf root:root temp
+chmod -Rf 755 temp
 chmod -Rf 777 temp/graphs
-chmod 644 graphs/.htaccess
-chmod 644 temp/graphs/.htaccess
 
 cd temp
 
 rm -Rf graphs/*.png
 rm -Rf template/src
-rm -Rf rrd/08_*
-rm -Rf rrd/09_*
 
-for i in rrd/* ; do rm $i/*.rrd ; done ;
+for i in rrd/* ; do rm -f $i/*.rrd ; done ;
 
 tar -czf ../eluna_graph_system.tar.gz ./
+mkdir -p ../out
 rm -Rf ../out/$version
 mkdir ../out/$version
 mv ../eluna_graph_system.tar.gz ../out/$version
-mv README.* ../out/$version
+mv README* ../out/$version
 mv LICENSE ../out/$version
 mv CHANGELOG ../out/$version
 mv UPGRADE ../out/$version
 cd ..
 rm -R temp
 cd out
-rm latest
+rm -f latest
 ln -s $version latest
 cd ..

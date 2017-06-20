@@ -4,11 +4,11 @@
  # ------------------------------------------------------ #
  # eLuna Graph System                                     #
  # ------------------------------------------------------ #
- # File    : download.pl                                  #
- # Author  : Stephane Dupont                              #
- # Version : 1.09                                         #
- # Date    : 2013-11-17                                   #
- # Summary :                                              #
+ # File     : download.pl                                 #
+ # Author   : Stephane Dupont                             #
+ # Version  : 1.09                                        #
+ # Released : 2013-11-17                                  #
+ # Summary  :                                             #
  #   Script to force file download                        #
  # ------------------------------------------------------ #
  #                                                        #

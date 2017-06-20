@@ -2,17 +2,17 @@
  # ------------------------------------------------------ #
  # eLuna Graph System                                     #
  # ------------------------------------------------------ #
- # File    : config.pm                                    #
- # Author  : Stephane Dupont                              #
- # Version : 1.09                                         #
- # Date    : 2013-11-17                                   #
- # Summary :                                              #
+ # File     : config.pm                                   #
+ # Author   : Stephane Dupont                             #
+ # Version  : 1.09                                        #
+ # Released : 2013-11-17                                  #
+ # Summary  :                                             #
  #   Config file                                          #
  # ------------------------------------------------------ #
  #                                                        #
 
 # Name of the monitored server
-$SERVER = "eLuna Web Server";
+$SERVER = "Localhost";
 
 # Path to the directory containing the RRD elements
 $RRD_DIR = 'rrd/';
