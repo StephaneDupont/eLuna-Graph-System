@@ -34,6 +34,10 @@ use, number of processes, amount of data transmitted via eth0
 | INSTALLATION |
 ----------------
 
+- Download the latest version here:
+
+  http://graphs.eluna.org/releases/latest/eluna_graph_system.tar.gz
+
 - Decompress the archive into a folder accessible via Apache.
 
   Example :

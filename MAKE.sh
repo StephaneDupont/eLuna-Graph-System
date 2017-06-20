@@ -81,23 +81,24 @@ chmod -Rf 777 temp/graphs
 
 cd temp
 
+rm -f graphs/.gitignore
 rm -Rf graphs/*.png
 rm -Rf template/src
 
 for i in rrd/* ; do rm -f $i/*.rrd ; done ;
 
 tar -czf ../eluna_graph_system.tar.gz ./
-mkdir -p ../out
-rm -Rf ../out/$version
-mkdir ../out/$version
-mv ../eluna_graph_system.tar.gz ../out/$version
-mv README* ../out/$version
-mv LICENSE ../out/$version
-mv CHANGELOG ../out/$version
-mv UPGRADE ../out/$version
+mkdir -p ../releases
+rm -Rf ../releases/$version
+mkdir ../releases/$version
+mv ../eluna_graph_system.tar.gz ../releases/$version
+mv README* ../releases/$version
+mv LICENSE ../releases/$version
+mv CHANGELOG ../releases/$version
+mv UPGRADE ../releases/$version
 cd ..
 rm -R temp
-cd out
+cd releases
 rm -f latest
 ln -s $version latest
 cd ..

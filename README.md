@@ -22,6 +22,8 @@ eLuna Graph System is an application written in Perl based on RRDTool. Its aim i
 
 ## Installation
 
+* Download the latest version here: [http://graphs.eluna.org/releases/latest/eluna_graph_system.tar.gz](http://graphs.eluna.org/releases/latest/eluna_graph_system.tar.gz) 
+
 * Decompress the archive into a folder accessible via Apache.
 
   Example :
