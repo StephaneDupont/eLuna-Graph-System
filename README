@@ -25,7 +25,7 @@ use, number of processes, amount of data transmitted via eth0
 - An http server (preferably Apache)
 - RRDTool (preferably version >= 1.2)
 - Perl (preferably version >= 5.8)
-  with the following modules installed :
+  with the following modules installed:
   * DateTime
   * HTML::Template::Expr
 
@@ -40,7 +40,7 @@ use, number of processes, amount of data transmitted via eth0
 
 - Decompress the archive into a folder accessible via Apache.
 
-  Example :
+  Example:
     mv eluna_graph_system.tar.gz /var/www/graphs/
     cd /var/www/graphs/
     tar -xzf eluna_graph_system.tar.gz
@@ -53,13 +53,13 @@ use, number of processes, amount of data transmitted via eth0
 - Schedule the execution of the 'update.pl' script every 5 minutes
   with crontab.
 
-  Example :
+  Example:
     */5 * * * * root /var/www/graphs/update.pl
 
 - Configure Apache so that the 'index.pl' script is interpreted correctly
   as a perl script and that is viewed as 'DirectoryIndex'.
 
-  Example :
+  Example:
     <Directory /var/www/graphs/>
       AddHandler cgi-script .pl
       Options +ExecCGI
@@ -112,7 +112,7 @@ Notes:
 
 - It is strongly advised that you read the documentation on RDDTool before
   customizing or adding elements. This documentation, as well as tutorials,
-  are available on the RRDTool site :
+  are available on the RRDTool site:
 
     http://oss.oetiker.ch/rrdtool/doc/index.en.html
 
@@ -195,7 +195,7 @@ Folder name
 ----------
 
   The file 'graph.pm' contains parameters for the display of the graph
-  associated with the element. This must include :
+  associated with the element. This must include:
 
   - The graph title, contained in the variable $GRAPH_TITLES{'id'} (where
     'id' is the element ID). If {#server#} is present in this title it will
@@ -230,7 +230,7 @@ Folder name
     - the graph dimensions (--w and --h)
     - graph comment
 
-    Example :
+    Example:
     'graph.pm' file associated with the 'cpu' element of previous examples
 
     $GRAPH_TITLES{'cpu'} = "{#server#} - CPU Usage";
