@@ -3,8 +3,8 @@
 ## Description
 
 * Title : eLuna Graph System
-* Version : 1.09
-* Released : 2013-11-17
+* Version : 1.10
+* Released : 2017-06-23
 * Website : [https://github.com/stephanedupont/eLunaGraphSystem](https://github.com/stephanedupont/eLunaGraphSystem)
 * Demo : [http://graphs.eluna.org](http://graphs.eluna.org)
 * Author : Stephane Dupont
