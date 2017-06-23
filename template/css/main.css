@@ -1,142 +1,95 @@
-html,body {
-  background: #FFFFFF;
-  margin: 0px;
-  padding: 0px;
-}
-
-#main p, #main ul, #main td, #main div {
-  margin-bottom: 20px;
-}
-
-p, ul, td {
-  text-align:justify;
-}
-
-html, body, p, ul, td, div {
-  font-family: Arial, Helvetica, sans-serif;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
   font-size: 14px;
-  font-weight: normal;
-  color: #666666;
-  line-height: 20px;
 }
 
-form, img {
-  padding: 0px;
-  margin: 0px;
+#header {
+  background-color: #607d8b;
+  width: 100%;
+  height: 140px;
 }
 
-b, strong {
-  color: #000000;
-  font-weight: normal;
+#header-content {
+  width: 920px;
+  height: 140px;
+  margin: 0 auto;
 }
 
-form input {
-  font-family : Arial, Helvetica, sans-serif;
-  font-size:  12px;
-  font-weight: bold;
-  color: #000000;
-  background: #FFFFFF;
-  border-width: 1px;
-  border-color: #000000;
-  border-style: solid;
-  text-align: center;
+#logo {
+  display: inline-block;
+  width: 195px;
+  height: 140px;
 }
 
-h1, h2, h3, h4 {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  color: #444444;
-  line-height: 22px;
-  margin-bottom: 20px;
-  margin-top: 50px;
-  background-color: #F0F0F0;
+#logo img {
+  display: block;
 }
 
-.underlined {
-  color: #000000;
-  font-weight: normal;
-  border-bottom: 1px dashed #000000;
-}
-
-.infos {
-  font-size: 12px;
-  width: 600px;
-  border: 1px solid black;
-  padding: 20px;
-}
-
-#container {
-  width: 881px;
-  padding-top: 25px;
-}
-
-#top {
-  width: 881px;
-  height: 132px;
-}
-
-#top_left {
-  width: 150px;
-  height: 132px;
+#title {
+  display: inline-block;
   vertical-align: top;
-  margin: 0px;
-  padding: 0px;
+  padding-top: 106px;
+  padding-left: 8px;
+  color: #FFFFFF;
+  font-size: 20px;
 }
 
-#top_right {
-  width: 731px;
-  height: 132px;
-  vertical-align: top;
-  margin: 0px;
-  padding: 0px;
-  padding-left: 25px;
-  padding-top: 110px;
-  background-repeat: no-repeat;
+#selector {
+  float: right;
+  padding-top: 106px;
 }
 
-#title {  
-  border-bottom: 1px dashed #000000;
-  font-family: Georgia, Arial, Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: normal;
-  color: #444444;
-}
-
-#view-selector {
-  text-align: right;
-  margin: 0px;
-  padding: 0px;
-  padding-right: 30px;  
-  height: 30px;
-}
-
-#main {
-  width: 850px;
-  vertical-align: top;
-  margin: 0px;
-  padding: 0px;
-  padding-right: 30px;
+#selector select {
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  min-width: 180px;
+  padding: 2px;
 }
 
 #content {
-  width: 850px;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
+  width: 920px;
+  margin: 0 auto;
 }
 
-#back {
-  text-align: right;
+.graph-container {
+  margin-top: 38px;
+  margin-bottom: 64px;
+}
+
+.custom-view-container {
+  margin-top: 38px;
+  margin-bottom: 25px;
+}
+
+.custom-view-container form {
+  margin-top: 38px;
+}
+
+.custom-view-container input {
+  font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+  padding: 2px 4px;
+}
+
+.graph-container h1, .custom-view-container h1 {
+  background-color: #d7dee2;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #333333;
+  font-size: 21px;
+  font-weight: 200;
 }
 
 .graph {
   display: inline-block;
   position: relative;
-  margin-bottom: 0px;
-}
-
-#main .graph, #main .options {
-  margin-bottom: 0px;
+  margin-top: 25px;
 }
 
 .graph-links {
@@ -153,31 +106,40 @@ h1, h2, h3, h4 {
   padding-top: 3px;
 }
 
-#back a, .options a, .graph-links a {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  color: #444444;
+#back {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.options a, .graph-links a, #back a {
+  line-height: 24px;
+  color: #333333;
+  border-bottom: 1px solid #999999;
   text-decoration: none;
-  border-bottom: 1px dashed #757575;  
+}
+
+.infos {
+  width: 600px;
+  background-color: #d7dee2;
+  padding: 20px;
+  margin: 20px;
+  color: #333333;
+  font-size: 13px;
+}
+
+.infos .title {
+  border-bottom: 1px solid #999999;
 }
 
 #footer {
   color: #757575;
-  font-weight: normal;
-  font-size: 11px;
-  margin: 0px;
-  padding: 0px;
+  font-size: 12px;
   margin-bottom: 20px;
   text-align: center;
 }
 
 #footer a {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-weight: normal;
-  color: #757575;
+  color: #333333;
+  border-bottom: 1px solid #999999;
   text-decoration: none;
-  border-bottom: 1px dashed #757575;
 }
-

@@ -4,7 +4,7 @@ $GRAPH_CMDS{'space_home'} = <<"SPACE_HOME_GRAPH_CMD";
 --vertical-label="Percent"
 --lower-limit 0 --upper-limit 100
 DEF:space={#path#}space_home.rrd:space:AVERAGE
-AREA:space{#color3#}:"Used Space  "
+AREA:space{#color2#}:"Used Space  "
 GPRINT:space:LAST:"Current\\: %3.0lf%%  "
 GPRINT:space:AVERAGE:"Average\\: %3.0lf%%  "
 GPRINT:space:MAX:"Maximum\\: %3.0lf%%\\n"

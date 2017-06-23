@@ -1,195 +1,204 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
-  <title>
-    <!-- TMPL_IF title --><!-- TMPL_VAR title --><!-- TMPL_ELSE --><!-- TMPL_VAR server --> - Summary<!--/TMPL_IF -->
-  </title>
+  <link rel="shortcut icon" href="<!-- TMPL_VAR template_path -->images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="<!-- TMPL_VAR template_path -->images/favicon.ico" type="image/x-icon">
+
+  <title><!-- TMPL_IF title --><!-- TMPL_VAR title --><!-- TMPL_ELSE --><!-- TMPL_VAR server --> - Summary<!--/TMPL_IF --></title>
 
   <link rel="stylesheet" href="<!-- TMPL_VAR template_path -->css/main.css" type="text/css"/>
-  <link rel="shortcut icon" type="image/x-icon" href="<!-- TMPL_VAR template_path -->images/favicon.ico"/>
 
-  <script src="<!-- TMPL_VAR template_path -->js/jquery-1.10.1.min.js"></script>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="Cache-Control" content="no-cache">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <!-- TMPL_UNLESS custom_view --><meta http-equiv="Refresh" content="300"><!--/TMPL_UNLESS -->
 
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+  <script src="<!-- TMPL_VAR template_path -->js/jquery-1.12.4.min.js"></script>
+
 </head>
 
 <body>
 
-  <table id="container" border="0" cellpadding="0" cellspacing="0" align="center">
-    <tr>
-      <td id="top">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr>
-            <td id="top_left">
-              <a title="Back to the index" href="index.pl"><img src="<!-- TMPL_VAR template_path -->images/top_left.jpg" border="0"></a>
-            </td>
-            <td id="top_right" background="<!-- TMPL_VAR template_path -->images/top_right.jpg">
-              <span id="title">
-              <!-- TMPL_IF title --><!-- TMPL_VAR title --><!-- TMPL_ELSE --><!-- TMPL_VAR server --> - Summary<!--/TMPL_IF -->
-              </span>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td id="view-selector">
+  <div id="header">
+
+    <div id="header-content">
+
+      <div id="logo">
+        <a href="index.pl" title="Back to the summary"><img src="<!-- TMPL_VAR template_path -->images/logo.png" /></a>
+      </div>
+
+      <div id="title">
+        <!-- TMPL_IF title --><!-- TMPL_VAR title --><!-- TMPL_ELSE --><!-- TMPL_VAR server --> - Summary<!--/TMPL_IF -->
+      </div>
+
+      <div id="selector">
+
         <!-- TMPL_IF summary -->
-        <form>
-          <select name="change-view" id="change-view">
-            <option value="h"<!-- TMPL_IF EXPR="summary eq 'h'" --> selected<!--/TMPL_IF -->>Last Four Hours
-            <option value="d"<!-- TMPL_IF EXPR="summary eq 'd'" --> selected<!--/TMPL_IF -->>Last Day
-            <option value="b"<!-- TMPL_IF EXPR="summary eq 'b'" --> selected<!--/TMPL_IF -->>Last Two Days
-            <option value="w"<!-- TMPL_IF EXPR="summary eq 'w'" --> selected<!--/TMPL_IF -->>Last Week
-            <option value="m"<!-- TMPL_IF EXPR="summary eq 'm'" --> selected<!--/TMPL_IF -->>Last Month
-            <option value="y"<!-- TMPL_IF EXPR="summary eq 'y'" --> selected<!--/TMPL_IF -->>Last Year
-          </select>
-        </form>
-        <script language="javascript">
-          $('#change-view').change(function() {
-            location.href='index.pl?summary_view='+this.value;
-          });
-        </script>
+        <select name="change-view" id="change-view">
+          <option value="h"<!-- TMPL_IF EXPR="summary eq 'h'" --> selected<!--/TMPL_IF -->>Last Four Hours
+          <option value="d"<!-- TMPL_IF EXPR="summary eq 'd'" --> selected<!--/TMPL_IF -->>Last Day
+          <option value="b"<!-- TMPL_IF EXPR="summary eq 'b'" --> selected<!--/TMPL_IF -->>Last Two Days
+          <option value="w"<!-- TMPL_IF EXPR="summary eq 'w'" --> selected<!--/TMPL_IF -->>Last Week
+          <option value="m"<!-- TMPL_IF EXPR="summary eq 'm'" --> selected<!--/TMPL_IF -->>Last Month
+          <option value="y"<!-- TMPL_IF EXPR="summary eq 'y'" --> selected<!--/TMPL_IF -->>Last Year
+        </select>
         <!-- TMPL_ELSE -->
-        <form>
-          <select id="rrd-select" name="rrd-select">
-            <!-- TMPL_LOOP rrds -->
-            <option value="<!-- TMPL_VAR id -->"<!-- TMPL_IF current --> selected<!--/TMPL_IF -->><!-- TMPL_VAR name -->
-            <!--/TMPL_LOOP -->
-          </select>
-        </form>
-        <script language="javascript">
-          $('#rrd-select').change(function() {
-            location.href='index.pl?rrd='+this.value+'<!-- TMPL_VAR curl -->'; 
-          });
-        </script>
-        <!--/TMPL_IF -->
-      </td>
-    </tr>
-    <tr>
-      <td id="main">
-
-        <div id="content">
-
-          <!-- TMPL_LOOP elgraphs -->
-
-          <h1>
-            <!-- TMPL_UNLESS rrd -->
-            <!-- TMPL_VAR gtitle -->
-            <!-- TMPL_ELSE -->
-            <!-- TMPL_IF EXPR="gtype eq 'h'" -->Last Four Hours (5 Minutes Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'd'" -->Last Day (5 Minutes Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'b'" -->Last Two Days (5 Minutes Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'w'" -->Last Week (30 Minutes Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'm'" -->Last Month (2 Hours Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'y'" -->Last Year (1 Day Average)<!--/TMPL_IF -->
-            <!-- TMPL_IF EXPR="gtype eq 'c'" -->Custom View<!--/TMPL_IF -->
-            <!--/TMPL_UNLESS -->
-          </h1>
-
-          <div align="center">
-
-            <div class="graph">
-
-              <!-- TMPL_IF link_type --><a title="<!-- TMPL_IF EXPR="link_type eq 'zoom'" -->Zoom Graph<!--/TMPL_IF --><!-- TMPL_IF EXPR="link_type eq 'more'" -->View More Graphs<!--/TMPL_IF -->" href="<!-- TMPL_VAR link_url -->" target="_self" class="graph"><!-- TMPL_ELSE --><a href="download.pl?uid=<!-- TMPL_VAR uid -->"><!--/TMPL_IF --><img border="0" src="<!-- TMPL_VAR img_src -->"></a>
-
-              <!-- TMPL_IF dss -->
-              <div id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div" class="options" style="display: none;">
-                <!-- TMPL_LOOP dss -->
-                <input type="checkbox" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_<!-- TMPL_VAR __counter__ -->"<!-- TMPL_IF state --> checked<!--/TMPL_IF --> /><!-- TMPL_VAR name -->&nbsp;
-                <!--/TMPL_LOOP-->
-                <a href="#" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink">Update</a>
-              </div>
-
-              <script>
-                $(function() {
-                  $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link").click(function(e) {
-                    e.preventDefault();
-                    $('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div').toggle();
-                  });
-                });
-                $(function() {
-                  $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink").click(function(e) {
-                    e.preventDefault(); 
-                    var cds = '';
-                    var i=1;
-                    while ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i).length > 0) {
-                      cds += ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i++).is(':checked')?'1':'0');
-                    }
-                    if (cds == 0) {
-                      alert('You must display at least one element!');
-                    } else {
-                      var url = $(location).attr('href');
-                      url = url.replace(new RegExp("[&\?]?crrd=[^&]*"), "");
-                      url = url.replace(new RegExp("[&\?]?cds=[^&]*"), "");
-                      url = url+(url.indexOf('?')!==-1?'&':'?')+'crrd=<!-- TMPL_VAR rrd_sid -->&cds='+cds;
-                      window.location = url;
-                    }
-                  });
-                });
-              </script>
-              <!--/TMPL_IF dss -->
-
-              <div class="graph-links">
-                <!-- TMPL_IF dss -->
-                <a href="#" title="Display graph options" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link">Options</a><br />
-                <!--/TMPL_IF dss -->
-                <a href="download.pl?uid=<!-- TMPL_VAR uid -->" title="Download this graph as a PNG file">Download</a><br />
-                <a href="download.pl?rrd=<!-- TMPL_VAR rrd_sid -->&time1=<!-- TMPL_VAR time1 -->&time2=<!-- TMPL_VAR time2 -->" title="Download the raw RRDtool data used to generate this graph in a CSV file">Raw Data</a>
-              </div>
-
-            </div>
-
-          </div>
-
-          <!-- TMPL_IF display_command -->
-          <div align="center">
-            <div class="infos">
-              <span class="underlined">Command used to generate the graph</span> :
-              <br><br>
-              <!-- TMPL_VAR cmd -->
-            </div>
-          </div>
-          <!--/TMPL_IF -->
-
+        <select id="rrd-select" name="rrd-select">
+          <!-- TMPL_LOOP rrds -->
+          <option value="<!-- TMPL_VAR id -->"<!-- TMPL_IF current --> selected<!--/TMPL_IF -->><!-- TMPL_VAR name -->
           <!--/TMPL_LOOP -->
-          
-          <!-- TMPL_IF display_custom_view -->
-          <h1>Custom View</h1>
-          <div align="center">
-            <form action="index.pl" method="get">
-              <input type="hidden" name="rrd" value="<!-- TMPL_VAR rrd -->">
-              <input type="hidden" name="type" value="c">
-              From : <input type="text" name="time1" value="<!-- TMPL_VAR ctime1 -->" size="" maxlength="16">&nbsp;&nbsp;
-              To : <input type="text" name="time2" value="<!-- TMPL_VAR ctime2 -->" size="" maxlength="16">&nbsp;&nbsp;
-              <input type="submit" value="View Custom View">
-            </form>
-          </div>          
-          <!--/TMPL_IF -->
+        </select>
+        <!--/TMPL_IF -->
 
-          <!-- TMPL_IF back_link -->
-          <div id="back">
-            <a href="<!-- TMPL_VAR back_link -->" target="_self">&lt;- Go Back</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="content">
+
+    <!-- TMPL_LOOP elgraphs -->
+
+    <div class="graph-container">
+
+      <h1>
+        <!-- TMPL_UNLESS rrd -->
+        <!-- TMPL_VAR gtitle -->
+        <!-- TMPL_ELSE -->
+        <!-- TMPL_IF EXPR="gtype eq 'h'" -->Last Four Hours (5 Minutes Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'd'" -->Last Day (5 Minutes Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'b'" -->Last Two Days (5 Minutes Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'w'" -->Last Week (30 Minutes Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'm'" -->Last Month (2 Hours Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'y'" -->Last Year (1 Day Average)<!--/TMPL_IF -->
+        <!-- TMPL_IF EXPR="gtype eq 'c'" -->Custom View<!--/TMPL_IF -->
+        <!--/TMPL_UNLESS -->
+      </h1>
+
+      <div align="center">
+
+        <div class="graph">
+
+          <!-- TMPL_IF link_type -->
+          <!-- TMPL_IF EXPR="link_type eq 'zoom'" -->
+          <a href="<!-- TMPL_VAR link_url -->" target="_self" title="Zoom Graph">
+          <!--/TMPL_IF -->
+          <!-- TMPL_IF EXPR="link_type eq 'more'" -->
+          <a href="<!-- TMPL_VAR link_url -->" target="_self" title="View More Graphs">
+          <!--/TMPL_IF -->
+          <!-- TMPL_ELSE -->
+          <a href="download.pl?uid=<!-- TMPL_VAR uid -->" title="Download image">
+          <!--/TMPL_IF -->
+            <img src="<!-- TMPL_VAR img_src -->">
+          </a>
+
+          <!-- TMPL_IF dss -->
+          <div id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div" class="options" style="display: none;">
+            <!-- TMPL_LOOP dss -->
+            <input type="checkbox" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_<!-- TMPL_VAR __counter__ -->"<!-- TMPL_IF state --> checked<!--/TMPL_IF --> /><!-- TMPL_VAR name -->&nbsp;
+            <!--/TMPL_LOOP-->
+            <a href="#" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink">Update</a>
           </div>
-          <!--/TMPL_IF -->
 
-          <div id="footer">
-            Powered by <a href="http://www.eluna.org/eluna_graph_system.html" target="_blank">eLuna Graph System</a>
-            /            
-            <a href="http://oss.oetiker.ch/rrdtool/" target="_blank">RRDtool</a>
+          <script>
+            $(function() {
+              $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link").click(function(e) {
+                e.preventDefault();
+                $('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_div').toggle();
+              });
+            });
+            $(function() {
+              $("#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_updateLink").click(function(e) {
+                e.preventDefault();
+                var cds = '';
+                var i=1;
+                while ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i).length > 0) {
+                  cds += ($('#<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_'+i++).is(':checked')?'1':'0');
+                }
+                if (cds == 0) {
+                  alert('You must display at least one element!');
+                } else {
+                  var url = $(location).attr('href');
+                  url = url.replace(new RegExp("[&\?]?crrd=[^&]*"), "");
+                  url = url.replace(new RegExp("[&\?]?cds=[^&]*"), "");
+                  url = url+(url.indexOf('?')!==-1?'&':'?')+'crrd=<!-- TMPL_VAR rrd_sid -->&cds='+cds;
+                  window.location = url;
+                }
+              });
+            });
+          </script>
+          <!--/TMPL_IF dss -->
+
+          <div class="graph-links">
+            <!-- TMPL_IF dss -->
+            <a href="#" title="Display graph options" id="<!-- TMPL_VAR rrd_id --><!-- TMPL_IF rrd -->_<!--TMPL_VAR gtype --><!--/TMPL_IF -->_link">Options</a><br />
+            <!--/TMPL_IF dss -->
+            <a href="download.pl?uid=<!-- TMPL_VAR uid -->" title="Download this graph as a PNG file">Download</a><br />
+            <a href="download.pl?rrd=<!-- TMPL_VAR rrd_sid -->&time1=<!-- TMPL_VAR time1 -->&time2=<!-- TMPL_VAR time2 -->" title="Download the raw RRDtool data used to generate this graph in a CSV file">Raw Data</a>
           </div>
 
         </div>
 
-      </td>
+      </div>
 
-    </tr>
-  </table>
+      <!-- TMPL_IF display_command -->
+      <div align="center">
+        <div class="infos">
+          <span class="title">Command used to generate the graph</span> :
+          <br><br>
+          <!-- TMPL_VAR cmd -->
+        </div>
+      </div>
+      <!--/TMPL_IF -->
+
+    </div>
+
+    <!--/TMPL_LOOP -->
+
+    <!-- TMPL_IF display_custom_view -->
+    <div class="custom-view-container">
+      <h1>Custom View</h1>
+      <div align="center">
+        <form action="index.pl" method="get">
+          <input type="hidden" name="rrd" value="<!-- TMPL_VAR rrd -->">
+          <input type="hidden" name="type" value="c">
+          From : <input type="text" name="time1" value="<!-- TMPL_VAR ctime1 -->" size="" maxlength="16">&nbsp;&nbsp;
+          To : <input type="text" name="time2" value="<!-- TMPL_VAR ctime2 -->" size="" maxlength="16">&nbsp;&nbsp;
+          <input type="submit" value="View Custom View">
+        </form>
+      </div>
+    </div>
+    <!--/TMPL_IF -->
+
+    <!-- TMPL_IF back_link -->
+    <div id="back">
+      <a href="<!-- TMPL_VAR back_link -->" target="_self">Go Back</a>
+    </div>
+    <!--/TMPL_IF -->
+
+    <div id="footer">
+      Powered by <a href="https://github.com/stephanedupont/eLunaGraphSystem" target="_blank">eLuna Graph System</a>
+      /
+      <a href="http://oss.oetiker.ch/rrdtool/" target="_blank">RRDtool</a>
+    </div>
+
+  </div>
+
 </body>
+
+<script language="JavaScript">
+  $().ready(function(){
+    <!-- TMPL_IF summary -->
+    $('#change-view').change(function() {location.href='index.pl?summary_view='+this.value;});
+    <!-- TMPL_ELSE -->
+    $('#rrd-select').change(function() {location.href='index.pl?rrd='+this.value+'<!-- TMPL_VAR curl -->';});
+    <!--/TMPL_IF -->
+  });
+</script>
 </html>

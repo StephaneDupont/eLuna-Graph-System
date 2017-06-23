@@ -6,7 +6,7 @@ $GRAPH_CMDS{'apache_hits'} = <<"AH_GRAPH_CMD";
 --lower-limit 0
 DEF:hits={#path#}apache_hits.rrd:hits:AVERAGE
 CDEF:hits_mn=hits,60,*
-AREA:hits_mn{#color2#}:"Hits / minute  "
+AREA:hits_mn{#color1#}:"Hits / minute  "
 GPRINT:hits_mn:LAST:"Current\\: %5.0lf  "
 GPRINT:hits_mn:AVERAGE:"Average\\: %5.0lf  "
 GPRINT:hits_mn:MAX:"Maximum\\: %5.0lf\\n"
