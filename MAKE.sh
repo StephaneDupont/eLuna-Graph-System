@@ -54,16 +54,18 @@ mv -f TEMP README.md
 
 mkdir temp
 
-cp index.pl temp
-cp update.pl temp
-cp download.pl temp
-cp config.example.pm temp/config.pm
+chmod 755 index.pl update.pl download.pl config*.pm
+
+cp -Rp index.pl temp
+cp -Rp update.pl temp
+cp -Rp download.pl temp
+cp -Rp config.example.pm temp/config.pm
 cp -d favicon.ico temp
-cp LICENSE temp
-cp README* temp
-cp CHANGELOG temp
-cp UPGRADE temp
-cp -R template temp
+cp -Rp LICENSE temp
+cp -Rp README* temp
+cp -Rp CHANGELOG temp
+cp -Rp UPGRADE temp
+cp -Rp template temp
 
 mkdir temp/rrd
 cp -R rrd/01_* temp/rrd/
@@ -76,7 +78,7 @@ cp -R rrd/07_* temp/rrd/
 cp -R graphs temp
 
 chown -Rf root:root temp
-chmod -Rf 755 temp
+chmod -Rf 755 temp/rrd/*
 chmod -Rf 777 temp/graphs
 
 cd temp

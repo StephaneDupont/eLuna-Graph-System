@@ -1,3 +1,16 @@
+------------------------------
+To upgrade from v1.09 to v1.10
+------------------------------
+
+- extract the files to a new folder
+- copy your rrd/*/*.rrd files to the same location in the new folder
+- if you added some custom items, copy your additional rrd/* items to the new folder
+- edit the config.pm file to match your previous 1.09 installation
+- replace your previous installation with the new folder
+
+Warning: v1.10 introduce a new template/design, so if you made changes to the original
+template, you might want to take a loot at it
+
 ---------------------------------------
 To upgrade from v1.07 or v1.08 to v1.09
 ---------------------------------------
