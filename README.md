@@ -12,6 +12,8 @@
 
 eLuna Graph System is an application written in Perl based on RRDTool. Its aim is collection and then presentation in graphic form of data to aid in the monitoring of a machine. By default, the application allows monitoring of the load, CPU usage, memory use, number of processes, amount of data transmitted via eth0 (In/Out) and disk space used in /.
 
+![Screenshot](screenshots/screenshot01.png?raw=true)
+
 ## Prerequisite
 
 * root access on the machine to monitor
