@@ -4,8 +4,8 @@
  # ------------------------------------------------------ #
  # File     : config.pm                                   #
  # Author   : Stephane Dupont                             #
- # Version  : 1.10                                        #
- # Released : 2017-06-23                                  #
+ # Version  : 1.11                                        #
+ # Released : 2019-05-19                                  #
  # Summary  :                                             #
  #   Config file                                          #
  # ------------------------------------------------------ #
