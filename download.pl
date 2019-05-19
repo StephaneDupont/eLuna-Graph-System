@@ -13,6 +13,9 @@
  # ------------------------------------------------------ #
  #                                                        #
 
+# Add current directory to @INC
+BEGIN { unshift @INC, '.'; }
+
 use CGI;
 use DateTime;
 

@@ -25,6 +25,9 @@
 
 die ("This script must be executed as a web script !") if !$ENV{'HTTP_HOST'};
 
+# Add current directory to @INC
+BEGIN { unshift @INC, '.'; }
+
 use POSIX qw(strftime);
 use CGI;
 use CGI::Cookie;
